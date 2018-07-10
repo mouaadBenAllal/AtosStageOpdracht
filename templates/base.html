@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-1.7.0.js"
+  integrity="sha256-fBiF7IYg9AoQ0EWUjT+fe4+cT3vS/x3ftIap8n6V4+M="
+  crossorigin="anonymous"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>{% block title %}UploadDoc{% endblock %}</title>
+  </head>
+  <body>
+  <header>
+    <nav id="navbar-example2" class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">Doc Upload</a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'documents_list' %}">Documents</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'upload_form' %}">Upload</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'total_reviews_rooms' %}">Charts</a>
+        </li>
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'core_logout' %}">Logout</a>
+
+          {% else %}
+            <a class="nav-link" href="{% url 'core_login' %}">Login</a>
+          {% endif %}
+
+        </li>
+
+      </ul>
+    </nav>
+  </header>
+  <br>
+  <div class="col-8">
+
+    {% block content %}
+
+    {% endblock %}
+
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/2.2.0/highcharts.js"></script>
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+
+  {% block javascript %}
+
+  {% endblock %}
+  </body>
+
+  </html>
+</DOCTYPE>
