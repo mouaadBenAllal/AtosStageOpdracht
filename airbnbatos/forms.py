@@ -5,4 +5,4 @@ from airbnbatos.models import Document
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ('description', 'document', )
+        fields = ('description', 'document')

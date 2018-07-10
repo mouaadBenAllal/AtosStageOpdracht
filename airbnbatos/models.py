@@ -1,5 +1,4 @@
 from django.db import models
-from djmoney.models.fields import MoneyField
 # Create your models here.
 
 
@@ -7,9 +6,6 @@ class Document(models.Model):
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to='documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.document
 
 
 class CsvExport(models.Model):
@@ -27,7 +23,3 @@ class CsvExport(models.Model):
     latitude = models.CharField(max_length=50)
     longitude = models.CharField(max_length=50)
     last_modified = models.CharField(blank=False, max_length=50)
-
-
-class TestModel(models.Model):
-    test = models.CharField(max_length=30)

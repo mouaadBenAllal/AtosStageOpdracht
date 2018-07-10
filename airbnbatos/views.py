@@ -1,50 +1,40 @@
-from django.db.models import Avg, Sum
+# Django
+from django.db.models import Sum
 from django.http import JsonResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.views.generic import ListView
 from airbnbatos.forms import DocumentForm
 from airbnbatos.models import Document, CsvExport
-from chartit import PivotDataPool, PivotChart
 import csv
 
+# Third party packages
+from chartit import PivotDataPool, PivotChart
 
-# Create your views here.
+
 def index(request):
-    """
-    View function for home page of site.
-    """
+    """ View function for home page of site. """
 
     # Render the HTML template base.html
-    return render(
-        request,
-        'base.html'
-    )
+    return render(request, 'base.html')
 
 
 class DocumentsList(ListView):
-    """
-        Class based view for list of csv documents.
-    """
+    """ Class based view for list of csv documents. """
 
     model = Document
     template_name = "fileupload/filelist.html"
 
 
 def model_form_upload(request):
-    """
-        View function for upload csv document.
-    """
-    # Checks if request method is post
+    """ View function for upload csv document. """
+
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
 
         # returns template formupload.html with form
-        return render(request, 'fileupload/formupload.html', {
-            'uploaddocform': form,
-
-        })
+            return redirect('documents_list')
     else:
         form = DocumentForm()
 
@@ -56,9 +46,8 @@ def model_form_upload(request):
 
 
 def export_csv(request):
-    """
-        View function for exporting csv into database.
-    """
+    """ View function for exporting csv into database. """
+
     file_exported = request.POST.get('document', None)
 
     with open('../run/media/' + file_exported, encoding='utf-8') as csvfile:
@@ -105,9 +94,8 @@ def export_csv(request):
 
 
 def total_reviews_per_room(request):
-    """
-        View function for displaying pivot chart on page.
-    """
+    """ View function for displaying pivot chart on page. """
+
     room_pivot_data = PivotDataPool(
         series=[{
             'options': {
@@ -148,5 +136,5 @@ def total_reviews_per_room(request):
         }
     )
 
-    # Render the HTML template total_reviewsroom
+    # Renders the HTML template total_reviewsroom.html and pivotchart.
     return render_to_response('charts/total_reviewsroom.html', {'roompivotchart': room_pivot_chart})
